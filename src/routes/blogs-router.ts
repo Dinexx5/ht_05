@@ -28,7 +28,8 @@ import {
 export const blogsRouter = Router({})
 
 
-blogsRouter.get('/', async (req: RequestWithQuery<getAllBlogsQueryModel>, res: Response<blogsViewModel>) => {
+blogsRouter.get('/',
+    async (req: RequestWithQuery<getAllBlogsQueryModel>, res: Response<blogsViewModel>) => {
 
 
     const returnedBlogs: blogsViewModel= await blogsQueryRepository.getAllBlogs(req.query)

@@ -51,4 +51,13 @@ export const blogIdlValidation = body('blogId').trim().not().isEmpty().withMessa
 
     })
 
+//users validation
+export const loginValidation = body('login').trim().isLength({min: 3, max: 10}).withMessage('Incorrect length').matches(/^[a-zA-Z0-9_-]*$/).withMessage('Incorrect login pattern')
+export const passwordValidation = body('password').trim().isLength({min: 6, max: 20}).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string')
+export const emailValidation = body('email').trim().isEmail().withMessage('Not an email')
+
+//auth validation
+
+export const loginOrEmailValidation = body('loginOrEmail').trim().not().isEmpty().withMessage('Not a string')
+export const passwordAuthValidation = body('password').trim().not().isEmpty().withMessage('Not a string')
 

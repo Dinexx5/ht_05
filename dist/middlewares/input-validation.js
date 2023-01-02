@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.blogIdlValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.inputValidationMiddleware = exports.basicAuthorisation = void 0;
+exports.passwordAuthValidation = exports.loginOrEmailValidation = exports.emailValidation = exports.passwordValidation = exports.loginValidation = exports.blogIdlValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.inputValidationMiddleware = exports.basicAuthorisation = void 0;
 const express_validator_1 = require("express-validator");
 const blogs_query_repository_1 = require("../repositories/blogs-query-repository");
 const basicAuthorisation = (req, res, next) => {
@@ -57,3 +57,10 @@ exports.blogIdlValidation = (0, express_validator_1.body)('blogId').trim().not()
     }
     return true;
 }));
+//users validation
+exports.loginValidation = (0, express_validator_1.body)('login').trim().isLength({ min: 3, max: 10 }).withMessage('Incorrect length').matches(/^[a-zA-Z0-9_-]*$/).withMessage('Incorrect login pattern');
+exports.passwordValidation = (0, express_validator_1.body)('password').trim().isLength({ min: 6, max: 20 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string');
+exports.emailValidation = (0, express_validator_1.body)('email').trim().isEmail().withMessage('Not an email');
+//auth validation
+exports.loginOrEmailValidation = (0, express_validator_1.body)('loginOrEmail').trim().not().isEmpty().withMessage('Not a string');
+exports.passwordAuthValidation = (0, express_validator_1.body)('password').trim().not().isEmpty().withMessage('Not a string');

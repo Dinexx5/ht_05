@@ -115,3 +115,53 @@ export type postsViewModel = {
 export type paramsIdModel = {
     id: string
 }
+
+export type createUserInputModel = {
+    login: string
+    password: string
+    email: string
+}
+
+export type getAllUsersQueryModel = {
+    sortBy: string
+    sortDirection: string
+    pageNumber: number
+    pageSize: number
+    searchLoginTerm: string
+    searchEmailTerm: string
+}
+
+export type userModel = {
+    id: string
+    login: string
+    email: string
+    createdAt: string
+}
+
+export type queryUsers = {
+    sortDirection: string
+    sortBy: string
+    pageNumber: number
+    pageSize: number
+    searchLoginTerm: string | null
+    searchEmailTerm: string | null
+}
+export type usersViewModel = {
+    pagesCount: number
+    page: number
+    pageSize: number
+    totalCount: number
+    items: userModel[]
+}
+export type userDbType = {
+    _id: Object
+    userName: string,
+    email: string,
+    passwordHash: string,
+    passwordSalt: string,
+    createdAt: string
+}
+export type authInputModel = {
+    loginOrEmail: string
+    password: string
+}
