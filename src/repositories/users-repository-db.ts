@@ -7,7 +7,7 @@ export const usersRepository = {
         await usersCollection.insertOne(newDbUser)
         return {
             id: newDbUser._id.toString(),
-            login: newDbUser.userName,
+            login: newDbUser.login,
             email: newDbUser.email,
             createdAt: newDbUser.createdAt
         }

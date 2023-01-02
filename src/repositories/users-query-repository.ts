@@ -3,7 +3,7 @@ import {queryUsers, userDbType, userModel, usersViewModel} from "../models/model
 
 function usersMapperToUserType (user: userDbType): userModel {
     return  {
-        login: user.userName,
+        login: user.login,
         email: user.email,
         createdAt: user.createdAt,
         id: user._id.toString()

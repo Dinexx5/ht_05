@@ -11,7 +11,7 @@ export const usersService = {
         const passwordHash = await this._generateHash(password, passwordSalt)
         const newDbUser: userDbType = {
             _id: new ObjectId(),
-            userName: login,
+            login: login,
             email: email,
             passwordHash: passwordHash,
             passwordSalt: passwordSalt,

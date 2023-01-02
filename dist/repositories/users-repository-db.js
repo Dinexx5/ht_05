@@ -18,7 +18,7 @@ exports.usersRepository = {
             yield db_1.usersCollection.insertOne(newDbUser);
             return {
                 id: newDbUser._id.toString(),
-                login: newDbUser.userName,
+                login: newDbUser.login,
                 email: newDbUser.email,
                 createdAt: newDbUser.createdAt
             };

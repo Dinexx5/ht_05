@@ -13,7 +13,7 @@ exports.usersQueryRepository = void 0;
 const db_1 = require("./db");
 function usersMapperToUserType(user) {
     return {
-        login: user.userName,
+        login: user.login,
         email: user.email,
         createdAt: user.createdAt,
         id: user._id.toString()

@@ -155,7 +155,7 @@ export type usersViewModel = {
 }
 export type userDbType = {
     _id: Object
-    userName: string,
+    login: string,
     email: string,
     passwordHash: string,
     passwordSalt: string,
