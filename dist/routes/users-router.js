@@ -27,6 +27,7 @@ exports.usersRouter.delete('/:id', input_validation_1.basicAuthorisation, (req, 
     const isDeleted = yield users_service_1.usersService.deleteUserById(req.params.id);
     if (isDeleted) {
         res.send(204);
+        return;
     }
     res.send(404);
 }));

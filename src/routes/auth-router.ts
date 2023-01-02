@@ -21,6 +21,7 @@ authRouter.post('/login',
         const checkResult = await usersService.checkCredentials(req.body)
         if (checkResult) {
             res.send(204)
+            return
         }
         res.send (401)
 

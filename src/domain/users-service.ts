@@ -19,6 +19,7 @@ export const usersService = {
         }
         return await usersRepository.createUser(newDbUser)
     },
+
     async checkCredentials(body: authInputModel): Promise<boolean> {
         const {loginOrEmail, password} = body
         const user = await usersRepository.findByLoginOrEmail(loginOrEmail)

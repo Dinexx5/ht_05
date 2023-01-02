@@ -18,6 +18,7 @@ exports.authRouter.post('/login', input_validation_1.loginOrEmailValidation, inp
     const checkResult = yield users_service_1.usersService.checkCredentials(req.body);
     if (checkResult) {
         res.send(204);
+        return;
     }
     res.send(401);
 }));

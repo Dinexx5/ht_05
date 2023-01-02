@@ -50,6 +50,7 @@ usersRouter.delete('/:id',
     const isDeleted: boolean = await usersService.deleteUserById(req.params.id)
     if (isDeleted) {
         res.send(204)
+        return
     }
     res.send(404)
 
