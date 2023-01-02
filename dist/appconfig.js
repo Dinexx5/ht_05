@@ -15,7 +15,7 @@ exports.app = (0, express_1.default)();
 exports.port = 3001;
 const parserMiddleware = (0, body_parser_1.default)({});
 exports.app.use(parserMiddleware);
-exports.app.use('/users', auth_router_1.authRouter);
+exports.app.use('/auth', auth_router_1.authRouter);
 exports.app.use('/users', users_router_1.usersRouter);
 exports.app.use('/posts', posts_router_1.postsRouter);
 exports.app.use('/blogs', blogs_router_1.blogsRouter);

@@ -13,7 +13,7 @@ export const port = 3001
 const parserMiddleware = bodyParser({})
 app.use(parserMiddleware)
 
-app.use('/users', authRouter)
+app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/posts', postsRouter)
 app.use('/blogs', blogsRouter)
