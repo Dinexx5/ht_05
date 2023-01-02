@@ -61,9 +61,9 @@ export const usersQueryRepository = {
         }
 
         if (searchLoginTerm && searchEmailTerm){
-            const countAllWithBothTerms = await usersCollection.countDocuments( {$and: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] })
+            const countAllWithBothTerms = await usersCollection.countDocuments( {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] })
             const usersDb: userDbType[] = await usersCollection
-                .find(  {$and: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] } )
+                .find(  {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] } )
                 .sort( {[sortBy]: sortDirectionNumber} )
                 .skip(skippedUsersNumber)
                 .limit(+pageSize)

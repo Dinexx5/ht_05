@@ -60,9 +60,9 @@ exports.usersQueryRepository = {
                 };
             }
             if (searchLoginTerm && searchEmailTerm) {
-                const countAllWithBothTerms = yield db_1.usersCollection.countDocuments({ $and: [{ email: { $regex: searchEmailTerm, $options: 'i' } }, { userName: { $regex: searchLoginTerm, $options: 'i' } }] });
+                const countAllWithBothTerms = yield db_1.usersCollection.countDocuments({ $or: [{ email: { $regex: searchEmailTerm, $options: 'i' } }, { userName: { $regex: searchLoginTerm, $options: 'i' } }] });
                 const usersDb = yield db_1.usersCollection
-                    .find({ $and: [{ email: { $regex: searchEmailTerm, $options: 'i' } }, { userName: { $regex: searchLoginTerm, $options: 'i' } }] })
+                    .find({ $or: [{ email: { $regex: searchEmailTerm, $options: 'i' } }, { userName: { $regex: searchLoginTerm, $options: 'i' } }] })
                     .sort({ [sortBy]: sortDirectionNumber })
                     .skip(skippedUsersNumber)
                     .limit(+pageSize)
