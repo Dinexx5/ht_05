@@ -15,7 +15,7 @@ export const usersRepository = {
     },
 
     async findByLoginOrEmail(loginOrEmail: string): Promise<userDbType | null> {
-        const user = await usersCollection.findOne( {$or: [{email: loginOrEmail}, {userName: loginOrEmail}] } )
+        const user = await usersCollection.findOne( {$or: [{email: loginOrEmail}, {login: loginOrEmail}] } )
         return user
     },
 

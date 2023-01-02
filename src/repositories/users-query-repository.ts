@@ -21,9 +21,9 @@ export const usersQueryRepository = {
         const skippedUsersNumber = (+pageNumber-1)*+pageSize
 
         if (searchLoginTerm && !searchEmailTerm){
-            const countAllWithSearchLoginTerm = await usersCollection.countDocuments({userName: {$regex: searchLoginTerm, $options: 'i' } })
+            const countAllWithSearchLoginTerm = await usersCollection.countDocuments({login: {$regex: searchLoginTerm, $options: 'i' } })
             const usersDb: userDbType[] = await usersCollection
-                .find( {userName: {$regex: searchLoginTerm, $options: 'i' } }  )
+                .find( {login: {$regex: searchLoginTerm, $options: 'i' } }  )
                 .sort( {[sortBy]: sortDirectionNumber} )
                 .skip(skippedUsersNumber)
                 .limit(+pageSize)
@@ -61,9 +61,9 @@ export const usersQueryRepository = {
         }
 
         if (searchLoginTerm && searchEmailTerm){
-            const countAllWithBothTerms = await usersCollection.countDocuments( {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] })
+            const countAllWithBothTerms = await usersCollection.countDocuments( {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {login: {$regex: searchLoginTerm, $options: 'i' }} ] })
             const usersDb: userDbType[] = await usersCollection
-                .find(  {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {userName: {$regex: searchLoginTerm, $options: 'i' }} ] } )
+                .find(  {$or: [{email: {$regex: searchEmailTerm, $options: 'i' } }, {login: {$regex: searchLoginTerm, $options: 'i' }} ] } )
                 .sort( {[sortBy]: sortDirectionNumber} )
                 .skip(skippedUsersNumber)
                 .limit(+pageSize)
