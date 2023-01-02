@@ -13,7 +13,7 @@ export const authRouter = Router({})
 
 
 
-authRouter.post('/',
+authRouter.post('/login',
     loginOrEmailValidation,
     passwordAuthValidation,
     inputValidationMiddleware,
