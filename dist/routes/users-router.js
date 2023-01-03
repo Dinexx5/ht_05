@@ -23,7 +23,7 @@ exports.usersRouter.post('/', input_validation_1.basicAuthorisation, input_valid
     const newUser = yield users_service_1.usersService.createUser(req.body);
     res.status(201).send(newUser);
 }));
-exports.usersRouter.delete('/:id', input_validation_1.basicAuthorisation, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.usersRouter.delete('/:id', input_validation_1.basicAuthorisation, input_validation_1.objectIdIsValid, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isDeleted = yield users_service_1.usersService.deleteUserById(req.params.id);
     if (isDeleted) {
         res.send(204);

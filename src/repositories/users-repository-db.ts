@@ -20,12 +20,10 @@ export const usersRepository = {
     },
 
     async deleteUserById(id:string): Promise<boolean> {
-        if (ObjectId.isValid(id)) {
-            let _id = new ObjectId(id)
-            let result = await usersCollection.deleteOne({_id: _id})
-            return result.deletedCount === 1
-        }
-        return false
+        let _id = new ObjectId(id)
+        let result = await usersCollection.deleteOne({_id: _id})
+        return result.deletedCount === 1
+
     },
 
 }

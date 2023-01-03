@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passwordAuthValidation = exports.loginOrEmailValidation = exports.emailValidation = exports.passwordValidation = exports.loginValidation = exports.blogIdlValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.inputValidationMiddleware = exports.basicAuthorisation = void 0;
+exports.passwordAuthValidation = exports.loginOrEmailValidation = exports.emailValidation = exports.passwordValidation = exports.loginValidation = exports.blogIdlValidation = exports.contentValidation = exports.shortDescriptionValidation = exports.titleValidation = exports.websiteUrlValidation = exports.descriptionValidation = exports.nameValidation = exports.objectIdIsValid = exports.inputValidationMiddleware = exports.basicAuthorisation = void 0;
 const express_validator_1 = require("express-validator");
 const blogs_query_repository_1 = require("../repositories/blogs-query-repository");
+const mongodb_1 = require("mongodb");
 const basicAuthorisation = (req, res, next) => {
     const loginPass = req.headers.authorization;
     if (loginPass === "Basic YWRtaW46cXdlcnR5") {
@@ -40,6 +41,16 @@ const inputValidationMiddleware = (req, res, next) => {
     }
 };
 exports.inputValidationMiddleware = inputValidationMiddleware;
+const objectIdIsValid = (req, res, next) => {
+    const id = req.params.id;
+    if (mongodb_1.ObjectId.isValid(id)) {
+        next();
+    }
+    else {
+        return res.status(400).end();
+    }
+};
+exports.objectIdIsValid = objectIdIsValid;
 //blogs validation
 exports.nameValidation = (0, express_validator_1.body)('name').trim().isLength({ max: 15 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string');
 exports.descriptionValidation = (0, express_validator_1.body)('description').trim().isLength({ max: 500 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string');
@@ -48,8 +59,7 @@ exports.websiteUrlValidation = (0, express_validator_1.body)('websiteUrl').trim(
 exports.titleValidation = (0, express_validator_1.body)('title').trim().isLength({ max: 30 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string title');
 exports.shortDescriptionValidation = (0, express_validator_1.body)('shortDescription').trim().isLength({ max: 100 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string desc');
 exports.contentValidation = (0, express_validator_1.body)('content').trim().isLength({ max: 1000 }).withMessage('Incorrect length').not().isEmpty().withMessage('Not a string content');
-exports.blogIdlValidation = (0, express_validator_1.body)('blogId').trim().not().isEmpty().withMessage('Not a string blogId').isLength({ max: 30 })
-    .withMessage('Incorrect length of blogId')
+exports.blogIdlValidation = (0, express_validator_1.body)('blogId').trim().not().isEmpty().withMessage('Not a string blogId').isLength({ max: 30 }).withMessage('Incorrect length of blogId')
     .custom((value) => __awaiter(void 0, void 0, void 0, function* () {
     const blog = yield blogs_query_repository_1.blogsQueryRepository.getBlogById(value);
     if (!blog) {

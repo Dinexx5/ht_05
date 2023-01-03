@@ -32,12 +32,9 @@ exports.usersRepository = {
     },
     deleteUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (mongodb_1.ObjectId.isValid(id)) {
-                let _id = new mongodb_1.ObjectId(id);
-                let result = yield db_1.usersCollection.deleteOne({ _id: _id });
-                return result.deletedCount === 1;
-            }
-            return false;
+            let _id = new mongodb_1.ObjectId(id);
+            let result = yield db_1.usersCollection.deleteOne({ _id: _id });
+            return result.deletedCount === 1;
         });
     },
 };

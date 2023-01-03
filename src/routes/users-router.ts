@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express"
 import {
     basicAuthorisation, emailValidation,
-    inputValidationMiddleware, loginValidation, passwordValidation,
+    inputValidationMiddleware, loginValidation, objectIdIsValid, passwordValidation,
 } from "../middlewares/input-validation";
 import {
     RequestWithQuery,
@@ -46,6 +46,7 @@ usersRouter.post('/',
 
 usersRouter.delete('/:id',
     basicAuthorisation,
+    objectIdIsValid,
     async (req: RequestWithParams<paramsIdModel>, res: Response) => {
     const isDeleted: boolean = await usersService.deleteUserById(req.params.id)
     if (isDeleted) {
