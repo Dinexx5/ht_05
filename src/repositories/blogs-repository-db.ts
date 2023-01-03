@@ -26,29 +26,25 @@ export const blogsRepository = {
 
 
     async deleteBlogById(id: string): Promise<boolean> {
-        if (ObjectId.isValid(id)) {
-            let _id = new ObjectId(id)
-            let result = await blogsCollection.deleteOne({_id: _id})
-            return result.deletedCount === 1
-        }
-        return false
+
+        let _id = new ObjectId(id)
+        let result = await blogsCollection.deleteOne({_id: _id})
+        return result.deletedCount === 1
+
     },
 
 
     async UpdateBlogById(id: string, body: updateBlogModel): Promise<boolean> {
         const {name, description, websiteUrl} = body
-        if (ObjectId.isValid(id)) {
-            let _id = new ObjectId(id)
-            let result = await blogsCollection.updateOne({_id: _id}, {
-                $set: {
-                    name: name,
-                    description: description,
-                    websiteUrl: websiteUrl
-                }
-            })
-            return result.matchedCount === 1
-        }
-        return false
+        let _id = new ObjectId(id)
+        let result = await blogsCollection.updateOne({_id: _id}, {
+            $set: {
+                name: name,
+                description: description,
+                websiteUrl: websiteUrl
+            }
+        })
+        return result.matchedCount === 1
 
 
     }

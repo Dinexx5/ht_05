@@ -63,9 +63,6 @@ exports.blogsQueryRepository = {
     },
     getBlogById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!mongodb_1.ObjectId.isValid(id)) {
-                return null;
-            }
             let _id = new mongodb_1.ObjectId(id);
             let blog = yield db_1.blogsCollection.findOne({ _id: _id });
             if (!blog) {

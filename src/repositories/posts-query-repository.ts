@@ -66,9 +66,6 @@ export const postsQueryRepository = {
     },
 
     async getPostById (id: string): Promise<postType | null> {
-        if (!ObjectId.isValid(id)) {
-            return null
-        }
 
         let _id = new ObjectId(id)
         let post: postDbType | null = await postsCollection.findOne({_id: _id})

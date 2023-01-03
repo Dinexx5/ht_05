@@ -66,9 +66,6 @@ exports.postsRepository = {
     },
     deletePostById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!mongodb_1.ObjectId.isValid(id)) {
-                return false;
-            }
             let _id = new mongodb_1.ObjectId(id);
             let result = yield db_1.postsCollection.deleteOne({ _id: _id });
             return result.deletedCount === 1;
@@ -77,9 +74,6 @@ exports.postsRepository = {
     UpdatePostById(id, body) {
         return __awaiter(this, void 0, void 0, function* () {
             const { title, shortDescription, content, blogId } = body;
-            if (!mongodb_1.ObjectId.isValid(id)) {
-                return false;
-            }
             let foundBlog = yield blogs_query_repository_1.blogsQueryRepository.getBlogById(blogId);
             if (!foundBlog) {
                 return false;

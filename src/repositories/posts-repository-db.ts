@@ -62,9 +62,7 @@ export const postsRepository = {
 
 
     async deletePostById (id: string): Promise<boolean> {
-        if (!ObjectId.isValid(id)) {
-            return false
-        }
+
         let _id = new ObjectId(id)
         let result = await postsCollection.deleteOne({_id: _id})
         return result.deletedCount === 1
@@ -75,9 +73,7 @@ export const postsRepository = {
 
     async UpdatePostById (id: string, body: updatePostInputModel): Promise<boolean> {
         const {title, shortDescription, content, blogId} = body
-        if (!ObjectId.isValid(id)) {
-            return false
-        }
+
         let foundBlog: blogType | null = await blogsQueryRepository.getBlogById(blogId)
         if (!foundBlog) {
             return false

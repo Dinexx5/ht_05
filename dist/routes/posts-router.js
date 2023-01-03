@@ -19,7 +19,7 @@ exports.postsRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, fun
     const returnedPosts = yield posts_query_repository_1.postsQueryRepository.getAllPosts(req.query);
     res.status(200).send(returnedPosts);
 }));
-exports.postsRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.postsRouter.get('/:id', input_validation_1.objectIdIsValid, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let post = yield posts_query_repository_1.postsQueryRepository.getPostById(req.params.id);
     if (!post) {
         res.send(404);
@@ -32,7 +32,7 @@ exports.postsRouter.post('/', input_validation_1.basicAuthorisation, input_valid
     const newPost = yield posts_service_1.postsService.createPost(req.body);
     res.status(201).send(newPost);
 }));
-exports.postsRouter.delete('/:id', input_validation_1.basicAuthorisation, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.postsRouter.delete('/:id', input_validation_1.basicAuthorisation, input_validation_1.objectIdIsValid, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const isDeleted = yield posts_service_1.postsService.deletePostById(req.params.id);
     if (isDeleted) {
         res.send(204);
@@ -41,7 +41,7 @@ exports.postsRouter.delete('/:id', input_validation_1.basicAuthorisation, (req, 
         res.send(404);
     }
 }));
-exports.postsRouter.put('/:id', input_validation_1.basicAuthorisation, input_validation_1.titleValidation, input_validation_1.shortDescriptionValidation, input_validation_1.contentValidation, input_validation_1.blogIdlValidation, input_validation_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.postsRouter.put('/:id', input_validation_1.basicAuthorisation, input_validation_1.objectIdIsValid, input_validation_1.titleValidation, input_validation_1.shortDescriptionValidation, input_validation_1.contentValidation, input_validation_1.blogIdlValidation, input_validation_1.inputValidationMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let isUpdated = yield posts_service_1.postsService.UpdatePostById(req.params.id, req.body);
     if (isUpdated) {
         res.send(204);

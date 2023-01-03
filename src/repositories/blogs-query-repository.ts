@@ -64,9 +64,6 @@ export const blogsQueryRepository = {
     },
 
     async getBlogById(id: string): Promise<blogType | null> {
-        if (!ObjectId.isValid(id)) {
-            return null
-        }
 
         let _id = new ObjectId(id)
         let blog: blogDbType | null = await blogsCollection.findOne({_id: _id})

@@ -4,7 +4,7 @@ import {
     basicAuthorisation, contentValidation,
     descriptionValidation,
     inputValidationMiddleware,
-    nameValidation, shortDescriptionValidation,
+    nameValidation, objectIdIsValid, shortDescriptionValidation,
     titleValidation,
     websiteUrlValidation
 } from "../middlewares/input-validation";
@@ -37,7 +37,9 @@ blogsRouter.get('/',
     res.status(200).send(returnedBlogs)
 })
 
-blogsRouter.get('/:id', async (req: RequestWithParams<paramsIdModel>, res: Response) => {
+blogsRouter.get('/:id',
+    objectIdIsValid,
+    async (req: RequestWithParams<paramsIdModel>, res: Response) => {
     const blog: blogType | null = await blogsQueryRepository.getBlogById(req.params.id)
     if (!blog) {
         res.send(404)
@@ -46,9 +48,8 @@ blogsRouter.get('/:id', async (req: RequestWithParams<paramsIdModel>, res: Respo
     }
 })
 
-blogsRouter.get('/:id/posts', async (req: RequestWithParamsAndQuery<paramsIdModel, getPostsForSpecifiedBlogModel>, res: Response) => {
-
-    let blogId = req.params.id
+blogsRouter.get('/:id/posts',
+    async (req: RequestWithParamsAndQuery<paramsIdModel, getPostsForSpecifiedBlogModel>, res: Response) => {
 
     const blog: blogType | null = await blogsQueryRepository.getBlogById(req.params.id)
     if (!blog) {
@@ -56,7 +57,7 @@ blogsRouter.get('/:id/posts', async (req: RequestWithParamsAndQuery<paramsIdMode
         return
     }
 
-    const returnedPosts: postsViewModel = await postsQueryRepository.getPostForBlog(blogId, req.query)
+    const returnedPosts: postsViewModel = await postsQueryRepository.getPostForBlog(req.params.id, req.query)
 
     res.status(200).send(returnedPosts)
 
@@ -98,6 +99,7 @@ blogsRouter.post('/',
 
 blogsRouter.delete('/:id',
     basicAuthorisation,
+    objectIdIsValid,
     async (req: RequestWithParams<paramsIdModel>, res: Response) => {
     const isDeleted: boolean = await blogsService.deleteBlogById(req.params.id)
     if (isDeleted) {
@@ -109,6 +111,7 @@ blogsRouter.delete('/:id',
 
 blogsRouter.put('/:id',
     basicAuthorisation,
+    objectIdIsValid,
     nameValidation,
     descriptionValidation,
     websiteUrlValidation,

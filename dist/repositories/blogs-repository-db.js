@@ -35,29 +35,23 @@ exports.blogsRepository = {
     },
     deleteBlogById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (mongodb_1.ObjectId.isValid(id)) {
-                let _id = new mongodb_1.ObjectId(id);
-                let result = yield db_1.blogsCollection.deleteOne({ _id: _id });
-                return result.deletedCount === 1;
-            }
-            return false;
+            let _id = new mongodb_1.ObjectId(id);
+            let result = yield db_1.blogsCollection.deleteOne({ _id: _id });
+            return result.deletedCount === 1;
         });
     },
     UpdateBlogById(id, body) {
         return __awaiter(this, void 0, void 0, function* () {
             const { name, description, websiteUrl } = body;
-            if (mongodb_1.ObjectId.isValid(id)) {
-                let _id = new mongodb_1.ObjectId(id);
-                let result = yield db_1.blogsCollection.updateOne({ _id: _id }, {
-                    $set: {
-                        name: name,
-                        description: description,
-                        websiteUrl: websiteUrl
-                    }
-                });
-                return result.matchedCount === 1;
-            }
-            return false;
+            let _id = new mongodb_1.ObjectId(id);
+            let result = yield db_1.blogsCollection.updateOne({ _id: _id }, {
+                $set: {
+                    name: name,
+                    description: description,
+                    websiteUrl: websiteUrl
+                }
+            });
+            return result.matchedCount === 1;
         });
     }
 };

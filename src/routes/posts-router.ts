@@ -1,5 +1,13 @@
 import {Response, Router} from "express"
-import {basicAuthorisation, blogIdlValidation, contentValidation, inputValidationMiddleware, shortDescriptionValidation, titleValidation} from "../middlewares/input-validation";
+import {
+    basicAuthorisation,
+    blogIdlValidation,
+    contentValidation,
+    inputValidationMiddleware,
+    objectIdIsValid,
+    shortDescriptionValidation,
+    titleValidation
+} from "../middlewares/input-validation";
 import {postsService} from "../domain/posts-service";
 import {
     RequestWithBody,
@@ -29,7 +37,9 @@ postsRouter.get('/', async (req: RequestWithQuery<getAllPostsQueryModel>, res: R
     res.status(200).send(returnedPosts)
 })
 
-postsRouter.get('/:id', async (req: RequestWithParams<paramsIdModel>, res: Response) => {
+postsRouter.get('/:id',
+    objectIdIsValid,
+    async (req: RequestWithParams<paramsIdModel>, res: Response) => {
     let post: postType | null = await postsQueryRepository.getPostById(req.params.id)
     if (!post) {
         res.send(404)
@@ -55,6 +65,7 @@ postsRouter.post('/',
 
 postsRouter.delete('/:id',
     basicAuthorisation,
+    objectIdIsValid,
     async (req: RequestWithParams<paramsIdModel>, res: Response) => {
     const isDeleted: boolean = await postsService.deletePostById(req.params.id)
     if (isDeleted) {
@@ -66,6 +77,7 @@ postsRouter.delete('/:id',
 
 postsRouter.put('/:id',
     basicAuthorisation,
+    objectIdIsValid,
     titleValidation,
     shortDescriptionValidation,
     contentValidation,
